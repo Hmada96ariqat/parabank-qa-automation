@@ -7,3 +7,5 @@ python-dotenv
 pytest-xdist
 pytest-html
 pyyaml
+pytest-ordering
+autopep8

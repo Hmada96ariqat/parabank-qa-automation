@@ -38,7 +38,7 @@ Verify that login fails when the user enters a valid username but an invalid pas
 
 **Test Data**
 - Username: <valid_username>
-- Password: <invalid_password> (use WrongPass123)
+- Password: <invalid_password> (ex: WrongPass123)
 
 **Steps**
 1. Navigate to https://parabank.parasoft.com/parabank.
@@ -48,12 +48,9 @@ Verify that login fails when the user enters a valid username but an invalid pas
 5. Click the Login button.
 
 **Expected Result**
-1. User remains on the login page (no navigation to Accounts Overview).
-2. An error message is displayed (e.g. “The username and password could not be verified”).
-3. The Accounts Overview page and account list are not visible.
+1. An error message is displayed (e.g. “The username and password could not be verified”).
+2. The Accounts Overview page is not visible.
 
-**Actual Result**
-- the website log me in no matter if the creds were wrong
 
 ---
 
@@ -76,11 +73,10 @@ Verify that a logged-in customer can open the first account from the account lis
 4. Click the numbe(link) of the first account.
 
 **Expected Result**
-1. Account Details page is displayed.
-2. The account number matches the selected account.
-3. The current balance is shown and is a valid numeric value.
-4. The account type is displayed.
-5. A transactions table is visible.
+1. The account number matches the selected account.
+2. The current balance is shown and is a valid numeric value.
+3. The account type is displayed.
+4. A transactions table is visible.
 
 ---
 
