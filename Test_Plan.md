@@ -49,7 +49,7 @@ This test plan describes the testing approach for validating ParaBank's customer
 - ParaBank demo environment: https://parabank.parasoft.com/parabank
 
 **Testing Tools:**
--  Python 3.14.0
+-  Python 3.14.0 (latest, but not the stable version)
 - Playwright
 - pytest test runner
 - Python requests library
