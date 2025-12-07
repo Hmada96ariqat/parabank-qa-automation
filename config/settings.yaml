@@ -1,1 +1,16 @@
-# username/password (fake demo creds)
+# username/password + URLs for ParaBank
+ui_base_url: "https://parabank.parasoft.com/parabank"
+api_base_url: "https://parabank.parasoft.com/parabank/services/bank"
+# UI login/display
+username: "Ahmad96"
+password: "qt5XTVv3L@@gw"
+expected_welcome_name: "test_1 Sol"
+# Registration minimal data
+first_name: "test_1"
+last_name: "Sol"
+street: "123 Main St"
+city: "Dallas"
+state: "TX"
+zip_code: "10001"
+phone: "555-1234"
+ssn: "123-45-6789"
