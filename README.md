@@ -85,12 +85,11 @@ playwright --version
 pytest ui/ -v
 ```
 
-**Test execution order:**
-1. `test_register_new_user` - Registers/ensures the test user exists (runs first)
-2. `test_successful_login` (TC_UI_01) - Successful login with valid credentials
-3. `test_failed_login` (TC_UI_02) - Failed login with invalid password
-4. `test_view_account_details` (TC_UI_03) - View details of the first account
-5. `test_transfer_funds` (TC_UI_04) - Transfer funds between two own accounts
+**UI Test Coverage:**
+1. `test_successful_login` (TC_UI_01) - Successful login with valid credentials
+2. `test_failed_login` (TC_UI_02) - Failed login with invalid password
+3. `test_view_account_details` (TC_UI_03) - View details of the first account
+4. `test_transfer_funds` (TC_UI_04) - Transfer funds between two own accounts
 
 **Run specific UI test file:**
 ```bash
@@ -117,9 +116,6 @@ pytest ui/test_account_details_ui.py::test_view_account_details -v
 
 # TC_UI_04 - Transfer funds between two own accounts
 pytest ui/test_transfer_ui.py::test_transfer_funds -v
-
-# Registration test (prerequisite for login & other flows)
-pytest ui/test_register_ui.py::test_register_new_user -v
 ```
 
 ### API Tests

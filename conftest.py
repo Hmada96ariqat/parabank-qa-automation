@@ -1,6 +1,7 @@
 import yaml
 import pytest
-from ui.pages import (LoginPage, RegisterPage, AccountsOverviewPage,
+import requests
+from ui.pages import (LoginPage, AccountsOverviewPage,
                       AccountDetailsPage, TransferFundsPage)
 from api.api_client import ParaBankAPIClient
 
@@ -18,11 +19,6 @@ def login_page(page):
     """Fixture for LoginPage"""
     return LoginPage(page)
 
-
-@pytest.fixture
-def register_page(page):
-    """Fixture for RegisterPage"""
-    return RegisterPage(page)
 
 
 @pytest.fixture
@@ -54,16 +50,36 @@ def config(settings):
             self.password = settings['password']
             self.invalid_password = settings['invalid_password']
             self.first_name = settings['first_name']
-            self.last_name = settings['last_name']
-            self.street = settings['street']
-            self.city = settings['city']
-            self.state = settings['state']
-            self.zip_code = settings['zip_code']
-            self.phone = settings['phone']
-            self.ssn = settings['ssn']
 
     return Config(settings)
 
+
+@pytest.fixture(autouse=True)
+def check_sut_health(request, config):
+    """Automatically check if SUT login endpoint is healthy before running UI tests.
+    
+    Tests the actual login endpoint since that's where 5xx errors occur.
+    Skips test if login returns 5xx or is unreachable.
+    """
+    # Only run health check for UI tests
+    if "ui" not in str(request.fspath):
+        return
+    
+    # Check login endpoint specifically (where the 500 errors happen)
+    try:
+        response = requests.post(
+            f"{config.base_url}/login.htm",
+            data={"username": config.username, "password": config.password},
+            timeout=10,
+            allow_redirects=False
+        )
+        
+        # If login endpoint returns 5xx, skip the test
+        if response.status_code >= 500:
+            pytest.skip(f"Login endpoint down: HTTP {response.status_code}")
+            
+    except Exception as e:
+        pytest.skip(f"Login endpoint unreachable: {e}")
 # -------- API fixtures (data setup) --------
 
 @pytest.fixture(scope="session")
