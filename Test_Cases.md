@@ -8,7 +8,7 @@
 Verify that a ParaBank customer can log in with valid credentials and see the Accounts Overview page.
 
 **Preconditions**
-1. Existing cutomer with username and password.
+1. Existing customer with username and password.
 
 **Test Data** <GET THEM FROM THE SETTINGS.YAML>
 - Username: <valid_username> 
@@ -28,7 +28,7 @@ Verify that a ParaBank customer can log in with valid credentials and see the Ac
 
 ---
 
-### TC_UI_02 – Failed Login with Invalid Password (Related-to-AC2) FAILED
+### TC_UI_02 – Failed Login with Invalid Password (Related-to-AC2)
 
 **Objective**  
 Verify that login fails when the user enters a valid username but an invalid password.
@@ -70,7 +70,7 @@ Verify that a logged-in customer can open the first account from the account lis
 1. Log in to ParaBank with valid credentials.
 2. Confirm that the Accounts Overview page is displayed.
 3. Identify the first account in the accounts list.
-4. Click the numbe(link) of the first account.
+4. Click the number(link) of the first account.
 
 **Expected Result**
 1. The account number matches the selected account.

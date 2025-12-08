@@ -68,7 +68,6 @@ Test data is stored in `config/settings.yaml`:
 - UI Base URL
 - API Base URL
 - Valid username & password
-- User registration information
 
 ---
 
@@ -137,6 +136,6 @@ Test data is stored in `config/settings.yaml`:
 
 ---
 
-**Document Version:** 2.0  
+**Document Version:** 2.0.1 
 **Last Updated:** 2025-12-07  
 **Author:** Ahmad Areiqat

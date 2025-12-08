@@ -67,5 +67,5 @@ class LoginPage:
     def get_error_text(self) -> str:
         # Get error message text
         if self.is_error_visible():
-            return (self.error_message.inner_text()
-                    if self.is_error_visible() else "")
+            return self.error_message.inner_text()
+        return ""
