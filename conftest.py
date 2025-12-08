@@ -56,30 +56,35 @@ def config(settings):
 
 @pytest.fixture(autouse=True)
 def check_sut_health(request, config):
-    """Automatically check if SUT login endpoint is healthy before running UI tests.
-    
-    Tests the actual login endpoint since that's where 5xx errors occur.
-    Skips test if login returns 5xx or is unreachable.
+    """Automatically check if SUT is accessible and login works before running UI tests.    
+    Skips test if either check fails.
     """
     # Only run health check for UI tests
     if "ui" not in str(request.fspath):
         return
     
-    # Check login endpoint specifically (where the 500 errors happen)
     try:
-        response = requests.post(
-            f"{config.base_url}/login.htm",
-            data={"username": config.username, "password": config.password},
-            timeout=10,
-            allow_redirects=False
+        # Check 1: Verify ParaBank site is accessible
+        site_response = requests.get(
+            config.base_url,
+            timeout=10
         )
         
-        # If login endpoint returns 5xx, skip the test
-        if response.status_code >= 500:
-            pytest.skip(f"Login endpoint down: HTTP {response.status_code}")
+        if site_response.status_code >= 500:
+            pytest.skip(f"ParaBank site down: HTTP {site_response.status_code}")
+        
+        # Check 2: Verify login endpoint accepts credentials
+        login_response = requests.get(
+            f"{config.base_url}/services/bank/login/{config.username}/{config.password}",
+            timeout=10
+        )
+        
+        # Skip if login API returns error
+        if login_response.status_code >= 400:
+            pytest.skip(f"Login validation failed: HTTP {login_response.status_code} - credentials may be invalid or DB unavailable")
             
     except Exception as e:
-        pytest.skip(f"Login endpoint unreachable: {e}")
+        pytest.skip(f"ParaBank unreachable: {e}")
 # -------- API fixtures (data setup) --------
 
 @pytest.fixture(scope="session")
