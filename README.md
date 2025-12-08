@@ -80,19 +80,23 @@ playwright --version
 
 ### UI Tests
 
-**Run all UI tests (in correct order):**
+**Run all UI tests (recommended):**
 ```bash
 pytest ui/ -v
 ```
 
 **Test execution order:**
-1. `test_register_new_user` - Creates user account (runs first)
-2. `test_successful_login` - Tests valid login
-3. `test_failed_login` - Tests invalid password
+1. `test_register_new_user` - Registers/ensures the test user exists (runs first)
+2. `test_successful_login` (TC_UI_01) - Successful login with valid credentials
+3. `test_failed_login` (TC_UI_02) - Failed login with invalid password
+4. `test_view_account_details` (TC_UI_03) - View details of the first account
+5. `test_transfer_funds` (TC_UI_04) - Transfer funds between two own accounts
 
-**Run specific UI test:**
+**Run specific UI test file:**
 ```bash
 pytest ui/test_login_ui.py -v
+pytest ui/test_account_details_ui.py -v
+pytest ui/test_transfer_ui.py -v
 ```
 
 **Run with browser visible (headed mode):**
@@ -108,7 +112,13 @@ pytest ui/test_login_ui.py::test_successful_login -v
 # TC_UI_02 - Failed login
 pytest ui/test_login_ui.py::test_failed_login -v
 
-# Registration test
+# TC_UI_03 - View account details
+pytest ui/test_account_details_ui.py::test_view_account_details -v
+
+# TC_UI_04 - Transfer funds between two own accounts
+pytest ui/test_transfer_ui.py::test_transfer_funds -v
+
+# Registration test (prerequisite for login & other flows)
 pytest ui/test_register_ui.py::test_register_new_user -v
 ```
 
@@ -119,7 +129,29 @@ pytest ui/test_register_ui.py::test_register_new_user -v
 pytest api/ -v
 ```
 
-**Note:** API tests are currently skeleton files (empty). They will be implemented in future iterations.
+**Implemented coverage**
+- `TC_API_01` – `GET /customers/{customerId}/accounts` returns a non-empty list of accounts with required fields (`id`, `type`, `balance`).
+- `TC_API_02` – `GET /accounts/{accountId}` returns a valid account object with matching `id`, numeric `balance`, and correct `customerId`/`type` types.
+- `TC_API_03` – `POST /createAccount` creates a new account (using `customerId`, `newAccountType`, `fromAccountId`) and verifies it can be retrieved again.
+- `TC_API_04` – `GET /accounts/{invalidId}` uses an invalid account id and asserts a 4xx error with an error payload or message.
+
+**API client implementation**
+- File: `api/api_client.py`
+- Class: `ParaBankAPIClient`
+- Loads `api_base_url` from `config/settings.yaml` by default.
+- Wraps the ParaBank REST endpoints:
+  - `get_customer_accounts(customer_id)` → `GET /customers/{customerId}/accounts`
+  - `get_account_details(account_id)` → `GET /accounts/{accountId}`
+  - `create_account(customer_id, new_account_type, from_account_id)` → `POST /createAccount`
+  - `transfer_funds(amount, from_account_id, to_account_id)` → `POST /transfer`
+
+**API test configuration**
+- File: `config/settings.yaml`
+- Important keys for API tests:
+  - `api_base_url` – base URL for the  API endpoints
+  - `customer_id` – existing customer id used for happy‑path scenarios
+  - `invalid_account_id` – non‑existent account id used for negative scenarios
+
 
 ### All Tests
 
@@ -168,16 +200,14 @@ The project uses **GitHub Actions** for continuous integration:
 
 3. **Run Tests**
    - Execute UI tests: execute UI test (for now)
-   - Tests run in headless mode (no visible browser)
+   - Tests run in headless mode (no visible browser) unless otherwise use --headed parameter
 
 4. **Results**
    - View test results in GitHub Actions logs
-   - Green check = all tests passed
-   - Red X = tests failed
+
 
 ### Viewing Pipeline Results
 
 1. Go to your GitHub repository
 2. Click **"Actions"** tab
 3. Click on latest workflow run
-4. Expand **"Run UI tests"** to see detailed results

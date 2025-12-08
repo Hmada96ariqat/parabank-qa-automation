@@ -17,3 +17,9 @@ phone: "555-1234"
 ssn: "123-45-6789"
 # Invalid password for negative login test
 invalid_password: "WP123"
+# API test data
+customer_id: 12212
+invalid_account_id: 999999999
+# API test account
+new_account_type: 1
+

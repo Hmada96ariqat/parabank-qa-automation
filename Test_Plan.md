@@ -45,18 +45,19 @@ This test plan describes the testing approach for validating ParaBank's customer
 
 ## 4. Test Environment
 
-**SUT:**
+**SUT**
 - ParaBank demo environment: https://parabank.parasoft.com/parabank
 
 **Testing Tools:**
--  Python 3.14.0 (latest, but not the stable version)
+- Python 3.14.0 (latest, but not the stable version)
 - Playwright
 - pytest test runner
 - Python requests library
 - Allure for reporting
+- autopep8 for code styling.
 
 **Browser:**
-- Chrome
+- Chromium
 
 ---
 
@@ -85,15 +86,15 @@ Test data is stored in `config/settings.yaml`:
 ## 7. Test Cases Summary
 
 | ID    | Title     |    Type    |  Status   |
-|---|---|---|---|
-| TC_UI_01  | Successful Login | UI | ✅ Passed |
-| TC_UI_02 | Failed Login with Invalid Password | UI | ⚠️ Failed (System allows invalid login — defect) |
-| TC_UI_03 | View Account Details | UI | ⏳ Pending execution |
-| TC_UI_04 | Transfer Funds | UI | ⏳ Pending execution |
-| TC_API_01 | Get Accounts List | API | ⏳ Pending execution |
-| TC_API_02 | Get Account Details | API | ⏳ Pending execution |
-| TC_API_03 | Create Resource via POST | API | ⏳ Pending execution |
-| TC_API_04 | Invalid Account ID | API | ⏳ Pending execution |
+
+| TC_UI_01  | Successful Login | UI | Passed |
+| TC_UI_02 | Failed Login with Invalid Password | UI | Failed (System allows invalid login — defect) |
+| TC_UI_03 | View Account Details | UI |  Passed |
+| TC_UI_04 | Transfer Funds | UI | Passed |
+| TC_API_01 | Get Accounts List | API | Passed |
+| TC_API_02 | Get Account Details | API | Passed |
+| TC_API_03 | Create Resource via POST | API | Passed |
+| TC_API_04 | Invalid Account ID | API | Passed |
 
 ---
 
@@ -114,7 +115,6 @@ Test data is stored in `config/settings.yaml`:
 - Test cases (`Test_Cases.md`)
 - BDD scenarios (for requirement anakysis)
 - Test scripts (Python + Playwright)
-- Test execution results
 - Allure test reports
 - GitHub CI pipeline
 
@@ -137,6 +137,6 @@ Test data is stored in `config/settings.yaml`:
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** 2025-12-06  
+**Document Version:** 2.0  
+**Last Updated:** 2025-12-07  
 **Author:** Ahmad Areiqat

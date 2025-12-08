@@ -191,7 +191,7 @@ POST /createAccount
 **Test Data**
 - customerId = 12212 (example)
 - newAccountType = 1 (e.g. SAVINGS)
-- fromAccountId = <existing account ID>
+- fromAccountId = <existing account ID> (# we get it from the TC01 ex: 1234)
 
 **Steps**
 1. Send a POST request to /createAccount with query parameters or form data as required: customerId, newAccountType, fromAccountId.

@@ -2,6 +2,7 @@ import yaml
 import pytest
 from ui.pages import (LoginPage, RegisterPage, AccountsOverviewPage,
                       AccountDetailsPage, TransferFundsPage)
+from api.api_client import ParaBankAPIClient
 
 
 @pytest.fixture(scope="session")
@@ -44,7 +45,7 @@ def transfer_page(page):
 
 @pytest.fixture
 def config(settings):
-    """Fixture to provide configuration settings"""
+    """Fixture to provide configuration settings for UI tests"""
     class Config:
         def __init__(self, settings):
             self.base_url = settings['ui_base_url']
@@ -62,3 +63,26 @@ def config(settings):
             self.ssn = settings['ssn']
 
     return Config(settings)
+
+# -------- API fixtures (data setup) --------
+
+@pytest.fixture(scope="session")
+def api_client(settings):
+    """Fixture to provide API client instance"""
+    return ParaBankAPIClient(settings["api_base_url"])
+
+@pytest.fixture(scope="session")
+def customer_id(settings) -> int:
+    return int(settings["customer_id"])  # from config/settings.yaml
+
+
+@pytest.fixture()
+def valid_account_id(api_client: ParaBankAPIClient, customer_id: int) -> int:
+    """Obtain a valid account id for the test customer (independent setup)."""
+    resp = api_client.get_customer_accounts(customer_id)
+    assert resp.status_code == 200, f"Precondition failed: accounts list status {resp.status_code}"
+    data = resp.json()
+    assert isinstance(data, list) and len(data) > 0, "Precondition failed: no accounts returned for customer"
+    first = data[0]
+    assert "id" in first, "Precondition failed: account missing 'id'"
+    return int(first["id"])
