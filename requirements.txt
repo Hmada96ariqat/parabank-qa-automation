@@ -9,3 +9,4 @@ pytest-html
 pyyaml
 pytest-ordering
 autopep8
+pytest-rerunfailures

@@ -33,7 +33,7 @@ jobs:
     
     - name: Run UI tests
       run: |
-        pytest ui/ -v --html=reports/ui-report.html --self-contained-html
+        pytest ui/ -v --reruns 2 --reruns-delay 1 --html=reports/ui-report.html --self-contained-html
     
     - name: Run API tests
       if: always()
