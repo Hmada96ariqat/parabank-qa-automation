@@ -171,11 +171,62 @@ pytest ui/ -v --html=reports/test-report.html --self-contained-html
 
 ### Allure Reports
 
-**Generate and view Allure report:**
+Allure provides rich, interactive test reports with features like test history, step-by-step execution, and visual dashboards.
+
+**Prerequisites - Install Allure CLI:**
+
+*macOS:*
 ```bash
-pytest --alluredir=reports/allure-results
-allure serve reports/allure-results
+brew install allure
 ```
+
+*Linux:*
+```bash
+wget https://github.com/allure-framework/allure2/releases/download/2.35.1/allure-2.35.1.tgz
+tar -zxvf allure-2.35.1.tgz
+sudo mv allure-2.35.1 /opt/
+sudo ln -s /opt/allure-2.35.1/bin/allure /usr/bin/allure
+```
+
+*Windows:*
+```bash
+scoop install allure
+```
+
+**Generate and view Allure report:**
+
+1. **Run tests** (Allure results are generated automatically):
+```bash
+pytest
+```
+
+2. **View interactive report** (opens in browser):
+```bash
+allure serve allure-results
+```
+
+3. **Or generate static HTML report:**
+```bash
+allure generate allure-results --clean -o allure-report
+```
+Then open `allure-report/index.html` in your browser.
+
+**What's in the Allure report:**
+- **Features/Stories**: Tests grouped by feature (Login, Accounts, Transfer, API)
+- **Severity levels**: Tests prioritized by importance (BLOCKER, CRITICAL, NORMAL)
+- **Steps**: Detailed step-by-step execution of each test
+- **Attachments**: Additional data like account balances, API parameters
+- **Timeline**: Visual timeline of test execution
+- **History**: Track test trends over time (when using CI/CD)
+
+**View Allure reports in CI/CD:**
+
+After each GitHub Actions run:
+1. Go to the **Actions** tab in your repository
+2. Click on the workflow run
+3. Scroll down to **Artifacts** section
+4. Download `allure-report` artifact
+5. Extract and open `index.html` in your browser
 
 ## CI/CD Pipeline
 
