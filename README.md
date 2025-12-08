@@ -76,6 +76,16 @@ playwright --version
 └── pytest.ini            # Pytest config
 ```
 
+## Handling Unstable SUT
+
+**Issue:** ParaBank demo server occasionally returns HTTP 500 errors on login endpoint.
+
+**Solution Implemented:**
+1. **Health Check Fixture** (`conftest.py`) - Tests login endpoint before each UI test runs. Skips test if endpoint returns 5xx.
+2. **Retry Mechanism** (`pytest-rerunfailures`) - CI retries failed tests up to 2 times with 1-second delay: `--reruns 2 --reruns-delay 1`
+
+**Result:** Tests skip gracefully when SUT is down instead of failing. Skipped tests appear as ⚠️ in reports.
+
 ## How to Run Tests
 
 ### UI Tests

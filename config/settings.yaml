@@ -3,7 +3,7 @@ ui_base_url: "https://parabank.parasoft.com/parabank"
 api_base_url: "https://parabank.parasoft.com/parabank/services/bank"
 overview_url: "https://parabank.parasoft.com/parabank/overview.htm"
 # UI login credentials
-username: "x1"
+username: "x1" # this customer_id is 14432
 password: "qt5XTVv3L@@gw"
 first_name: "test_1"
 # Invalid password for negative login test
