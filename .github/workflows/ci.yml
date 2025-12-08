@@ -5,6 +5,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    # Run every 6 hours (at 00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
 
 jobs:
   test:
@@ -33,5 +36,9 @@ jobs:
     
     - name: Run UI tests
       run: |
-        pytest ui/test_register_ui.py ui/test_login_ui.py -v --html=reports/ui-report.html --self-contained-html
+        pytest ui/ -v --html=reports/ui-report.html --self-contained-html
+    
+    - name: Run API tests
+      run: |
+        pytest api/ -v --html=reports/api-report.html --self-contained-html
 
