@@ -6,7 +6,6 @@
 - **Playwright (UI)** - Browser automation for UI testing
 - **Requests (API)** - HTTP library for API testing
 - **Pytest** - Test runner framework
-
 - **Allure reporting** - Test reporting and documentation
 - **CI** - GitHub Actions continuous integration
 
@@ -289,29 +288,3 @@ AC8
     When I request the details for this invalid account
     Then the response status code should be a 4xx error
     And the response should contain an error message
-
----
-
-## Notes for Implementation
-
-### Test Organization
-- Organize tests by feature/module
-- Use descriptive test names that explain the scenario
-- Keep test files focused and manageable in size
-
-### Data Management
-- Store test data in separate files or fixtures
-- Use `.env` file for environment-specific configurations
-- Never commit sensitive credentials to version control
-
-### Reporting Best Practices
-- Add meaningful step descriptions
-- Attach relevant artifacts (screenshots, API responses)
-- Use appropriate severity levels for tests
-- Group related tests under the same feature/epic
-
-### Code Quality
-- Follow PEP 8 style guidelines
-- Add docstrings to test functions
-- Use meaningful variable and function names
-- Keep functions small and focused on a single responsibility

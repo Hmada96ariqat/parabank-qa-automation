@@ -1,1 +1,16 @@
-# username/password (fake demo creds)
+# username/password + URLs for ParaBank
+ui_base_url: "https://parabank.parasoft.com/parabank"
+api_base_url: "https://parabank.parasoft.com/parabank/services/bank"
+overview_url: "https://parabank.parasoft.com/parabank/overview.htm"
+# UI login credentials
+username: "x1" # this customer_id is 14432
+password: "qt5XTVv3L@@gw"
+first_name: "test_1"
+# Invalid password for negative login test
+invalid_password: "WP123"
+# API test data
+customer_id: 12212 # existing customer ID from ParaBank demo data
+invalid_account_id: 999999999
+# API test account
+new_account_type: 1
+
